@@ -14,7 +14,31 @@
   </ion-header>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <strong>To see the issue:</strong>
+    <p>While the chat window is open, Open the Modal using the button below.</p>
+    <ion-button class="ion-margin-vertical" color="tertiary" (click)="openModal()">Open Modal</ion-button>
+    <p class="ion-margin-vertical">You will observe that the chat textarea cannot focus while the modal is open due to the modal trap.</p>
+    <p>The scenario of an app having a chat/support panel that is intended to be the top-most element on the screen seems to be a reasonable use case where modal trapping could be made configurable.</p>
   </div>
+
+  <ion-fab *ngIf="!chatWindowIsVisible" slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openChatPanel()">
+        <ion-icon name="chatbubbles"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
+<div *ngIf="chatWindowIsVisible" class="chat-popup" id="myForm">
+  <form class="form-container">
+    <h1>Chat</h1>
+    <div class="messages">
+      <span *ngFor="let message of messages" class="message">{{message}}</span>
+    </div>
+    <ion-textarea fill="outline" rows="2" labelPlacement="floating" placeholder="Type message…" name="msg" required></ion-textarea>
+
+    <div class="chat-options">
+      <ion-button type="submit" color="success" >Send</ion-button>
+      <ion-button type="button" color="danger" (click)="closeChatPanel()">Close</ion-button>
+    </div>
+
+  </form>
+</div>
